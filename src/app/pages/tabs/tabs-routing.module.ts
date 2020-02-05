@@ -12,8 +12,11 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+            loadChildren: '../tab1/tab1.module#Tab1PageModule'
+          },
+          {
+            path: 'agregar/:listaId',
+            loadChildren: () => import('../agregar/agregar.module').then(mod => mod.AgregarPageModule)
           }
         ]
       },
@@ -22,18 +25,11 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
-          }
-        ]
-      },
-      {
-        path: 'tab3',
-        children: [
+            loadChildren: '../tab2/tab2.module#Tab2PageModule'
+          },
           {
-            path: '',
-            loadChildren: () =>
-              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+            path: 'agregar/:listaId',
+            loadChildren: () => import('../agregar/agregar.module').then(mod => mod.AgregarPageModule)
           }
         ]
       },
@@ -52,7 +48,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [
+    RouterModule.forChild(routes)
+  ],
   exports: [RouterModule]
 })
 export class TabsPageRoutingModule {}
