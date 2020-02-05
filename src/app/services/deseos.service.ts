@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Lista } from '../models/lista.model';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class DeseosService {
   listas: Lista[] = [];
 
 
-  constructor() {
+  constructor( private toastCtrl: ToastController ) {
 
     this.cargarStorage();
   }
@@ -25,7 +26,7 @@ export class DeseosService {
 
   }
 
-  borrarLista( lista: Lista ) {
+  async borrarLista( lista: Lista ) {
 
     this.listas = this.listas.filter( listaData => listaData.id !== lista.id );
 
@@ -42,9 +43,7 @@ export class DeseosService {
 
   }
 
-
-
-  guardarStorage() {
+  async guardarStorage() {
 
     localStorage.setItem('data', JSON.stringify(this.listas) );
 
@@ -58,8 +57,14 @@ export class DeseosService {
       this.listas = [];
     }
 
-
   }
-
-
+  
+  async presentToast(message:string) {
+    const toast = await this.toastCtrl.create({
+      message: 'Se ha eliminado la lista correctamente',
+      duration: 2000,
+      color: "light"
+    });
+    toast.present();
+  }
 }
